@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://bywp4er0gwfns"]
+
+[ext_resource type="Script" path="res://scripts/simple_cube.gd" id="1_6ik0t"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_pa0o2"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_q7psx"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_01806"]
+
+[node name="simpleCube" type="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("BoxMesh_pa0o2")
+script = ExtResource("1_6ik0t")
+
+[node name="simpleSphere" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.1875, 1.49012e-08, 0, -2.98023e-08, 0.826396, 0, 0, 0, 1.1, 0.0143755, 0.79689, 0.0965281)
+mesh = SubResource("SphereMesh_q7psx")
+
+[node name="arm" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.548563, 0, 0, 0, 0.351975, 0.585889, 0, -0.43951, 0.469201, 0, -0.0842586, 0.683737)
+mesh = SubResource("CapsuleMesh_01806")

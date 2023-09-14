@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://bfgobr5g4ba0e"]
+
+[ext_resource type="PackedScene" uid="uid://bywp4er0gwfns" path="res://scenes/simple_cube.tscn" id="1_m0x84"]
+
+[sub_resource type="ORMMaterial3D" id="ORMMaterial3D_15l75"]
+albedo_color = Color(0.619608, 0.980392, 0.568627, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_7bibd"]
+material = SubResource("ORMMaterial3D_15l75")
+
+[node name="worldRoot" type="Node3D"]
+
+[node name="bert" parent="." instance=ExtResource("1_m0x84")]
+speed = 2.5
+
+[node name="ernie" parent="." instance=ExtResource("1_m0x84")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.96035, 0.148739, 0.921777)
+speed = 10.0
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.941676, 0.33652, 0, -0.33652, 0.941676, 0, 1.91174, 4.62052)
+fov = 79.5048
+
+[node name="ground" type="MeshInstance3D" parent="."]
+transform = Transform3D(11.9617, 0, 0, 0, 1, 0, 0, 0, 8.38008, 0, -1.81881, 0)
+mesh = SubResource("BoxMesh_7bibd")
+
+[node name="mainLight" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.601274, -0.79258, -0.101421, 0.764193, 0.533321, 0.362737, -0.233408, -0.295609, 0.926356, -0.363496, 3.01091, 2.01449)
+shadow_enabled = true

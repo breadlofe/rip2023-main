@@ -1,20 +1,56 @@
 extends MeshInstance3D
 
 @export var speed: float = 5.0
+@export var bounce_time: float = 1.0
+@export var bullet_scene: PackedScene
+
 var moving_up: bool = false
 var time_to_move_in_dir: float = 0.5
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
-
+	#var tnode: Timer
+	get_child(2).wait_time = bounce_time
+	$Timer.start() # resets timer so they go at different speeds at first loop.
+	
+	#1st way -->
+	#tnode = find_child("b*")
+	#get_child does not have to seach, so it is faster.
+	
+	#2nd way -->
+	#tnode = get_child("Node/bounce_time")
+	#find_node: gets a node by name
+	
+	#3rd way -->
+	#tnode = get_node("/root/world_root/bert/Node/bounce_time")
+	
+	#4th way -->
+	#tnode = $Node/bounce_time
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	# A Vector2 (move_vec.x is in range (-1.0, 1.0)
-	var input_vec = Input.get_vector("move_left", "move_right", "move_up", "move_down")
-	var move_vec = Vector3(input_vec.x, 0, input_vec.y).normalized() * speed * delta
-	translate_object_local(move_vec)
+	do_movement(delta)
+	if Input.is_action_just_pressed("fire"):
+		var new_bullet = bullet_scene.instantiate()
+		#puts laser where the container is.
+		get_node("../bullet_container").add_child(new_bullet)
+		# global position makes it so that the position of the laser begins at position of container.
+		new_bullet.global_position = global_position
+		new_bullet.global_rotation = global_rotation
 
 func _physics_process(delta):
 	pass
+
+func do_movement(delta):
+	# A Vector2 (move_vec.x is in range (-1.0, 1.0)
+	var input_vec = Input.get_vector("move_left", "move_right", "move_up", "move_down")
+	var up_move: float = 2.0
+	if not moving_up:
+		up_move *= -1 
+	var move_vec = Vector3(input_vec.x, 0, input_vec.y).normalized() * speed * delta
+	move_vec.y = up_move * delta
+	translate_object_local(move_vec)
+
+func on_change_direction():
+	moving_up = not moving_up
+	print("change directions!")

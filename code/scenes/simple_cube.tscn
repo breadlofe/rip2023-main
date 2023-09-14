@@ -9,7 +9,6 @@
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_01806"]
 
 [node name="simpleCube" type="MeshInstance3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 mesh = SubResource("BoxMesh_pa0o2")
 script = ExtResource("1_6ik0t")
 
@@ -20,3 +19,8 @@ mesh = SubResource("SphereMesh_q7psx")
 [node name="arm" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.548563, 0, 0, 0, 0.351975, 0.585889, 0, -0.43951, 0.469201, 0, -0.0842586, 0.683737)
 mesh = SubResource("CapsuleMesh_01806")
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="on_change_direction"]

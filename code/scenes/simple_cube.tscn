@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://bywp4er0gwfns"]
+[gd_scene load_steps=6 format=3 uid="uid://bywp4er0gwfns"]
 
 [ext_resource type="Script" path="res://scripts/simple_cube.gd" id="1_6ik0t"]
 
@@ -8,19 +8,30 @@
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_01806"]
 
-[node name="simpleCube" type="MeshInstance3D"]
-mesh = SubResource("BoxMesh_pa0o2")
+[sub_resource type="BoxShape3D" id="BoxShape3D_ttpbr"]
+size = Vector3(1, 0.811023, 0.707062)
+
+[node name="player" type="CharacterBody3D" groups=["player"]]
 script = ExtResource("1_6ik0t")
 
-[node name="simpleSphere" type="MeshInstance3D" parent="."]
+[node name="simpleCube" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.24404, 0, 0, 0, 1.04065, 0, 0, 0, 1.04065, 0, 0, 0)
+mesh = SubResource("BoxMesh_pa0o2")
+
+[node name="simpleSphere" type="MeshInstance3D" parent="simpleCube"]
 transform = Transform3D(1.1875, 1.49012e-08, 0, -2.98023e-08, 0.826396, 0, 0, 0, 1.1, 0.0143755, 0.79689, 0.0965281)
 mesh = SubResource("SphereMesh_q7psx")
 
-[node name="arm" type="MeshInstance3D" parent="."]
+[node name="arm" type="MeshInstance3D" parent="simpleCube"]
 transform = Transform3D(0.548563, 0, 0, 0, 0.351975, 0.585889, 0, -0.43951, 0.469201, 0, -0.0842586, 0.683737)
 mesh = SubResource("CapsuleMesh_01806")
 
-[node name="Timer" type="Timer" parent="."]
+[node name="Node" type="Node" parent="simpleCube"]
+
+[node name="Timer" type="Timer" parent="simpleCube/Node"]
 autostart = true
 
-[connection signal="timeout" from="Timer" to="." method="on_change_direction"]
+[node name="player_bounding_box" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_ttpbr")
+
+[connection signal="timeout" from="simpleCube/Node/Timer" to="." method="on_change_direction"]

@@ -1,13 +1,17 @@
-[gd_scene load_steps=5 format=3 uid="uid://bfgobr5g4ba0e"]
+[gd_scene load_steps=8 format=3 uid="uid://bfgobr5g4ba0e"]
 
 [ext_resource type="PackedScene" uid="uid://bywp4er0gwfns" path="res://scenes/simple_cube.tscn" id="1_m0x84"]
 [ext_resource type="PackedScene" uid="uid://dgkalf61u10pa" path="res://scenes/bullet.tscn" id="2_414u6"]
+[ext_resource type="PackedScene" uid="uid://bm8ndy2upkkun" path="res://scenes/bouncer.tscn" id="3_t71x7"]
+[ext_resource type="PackedScene" uid="uid://bevdbdcpjcjv" path="res://scenes/collectable.tscn" id="4_kv4wn"]
 
 [sub_resource type="ORMMaterial3D" id="ORMMaterial3D_15l75"]
 albedo_color = Color(0.619608, 0.980392, 0.568627, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_7bibd"]
 material = SubResource("ORMMaterial3D_15l75")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_pl6ox"]
 
 [node name="worldRoot" type="Node3D"]
 
@@ -25,10 +29,6 @@ bullet_scene = ExtResource("2_414u6")
 transform = Transform3D(1, 0, 0, 0, 0.941676, 0.33652, 0, -0.33652, 0.941676, 0, 1.91174, 4.62052)
 fov = 79.5048
 
-[node name="ground" type="MeshInstance3D" parent="."]
-transform = Transform3D(11.9617, 0, 0, 0, 1, 0, 0, 0, 8.38008, 0, -1.81881, 0)
-mesh = SubResource("BoxMesh_7bibd")
-
 [node name="mainLight" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.601274, -0.79258, -0.101421, 0.764193, 0.533321, 0.362737, -0.233408, -0.295609, 0.926356, -0.363496, 3.01091, 2.01449)
 shadow_enabled = true
@@ -37,3 +37,19 @@ shadow_enabled = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.13255, 2.1481)
 
 [node name="bullet_container" type="Node3D" parent="."]
+
+[node name="ground" type="StaticBody3D" parent="."]
+transform = Transform3D(11.9617, 0, 0, 0, 1, 0, 0, 0, 8.38008, 0, -1.81881, 0)
+
+[node name="ground_mesh" type="MeshInstance3D" parent="ground"]
+mesh = SubResource("BoxMesh_7bibd")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ground"]
+shape = SubResource("BoxShape3D_pl6ox")
+
+[node name="bouncer" parent="." instance=ExtResource("3_t71x7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.85742, 0, 0)
+
+[node name="Collectable" parent="." instance=ExtResource("4_kv4wn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)

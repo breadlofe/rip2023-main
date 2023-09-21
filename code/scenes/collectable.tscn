@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://bevdbdcpjcjv"]
+
+[ext_resource type="Script" path="res://scripts/collectable.gd" id="1_l6o75"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_r67s8"]
+
+[sub_resource type="ORMMaterial3D" id="ORMMaterial3D_blrix"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_cih0l"]
+
+[node name="Collectable" type="Area3D"]
+collision_layer = 2
+script = ExtResource("1_l6o75")
+
+[node name="collectable_mesh" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_r67s8")
+surface_material_override/0 = SubResource("ORMMaterial3D_blrix")
+
+[node name="collectable_collider" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_cih0l")
+
+[connection signal="body_shape_entered" from="." to="." method="_on_body_entered"]

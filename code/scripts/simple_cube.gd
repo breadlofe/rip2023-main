@@ -1,4 +1,4 @@
-extends MeshInstance3D
+extends CharacterBody3D
 
 @export var speed: float = 5.0
 @export var bounce_time: float = 1.0
@@ -9,9 +9,10 @@ var time_to_move_in_dir: float = 0.5
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	#var tnode: Timer
-	get_child(2).wait_time = bounce_time
-	$Timer.start() # resets timer so they go at different speeds at first loop.
+	var tnode: Timer
+	tnode = $simpleCube/Node/Timer
+	#tnode.wait_time
+	#$Timer.start() # resets timer so they go at different speeds at first loop.
 	
 	#1st way -->
 	#tnode = find_child("b*")
@@ -38,7 +39,7 @@ func _process(delta):
 		new_bullet.global_position = global_position
 		new_bullet.global_rotation = global_rotation
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	pass
 
 func do_movement(delta):
@@ -47,10 +48,17 @@ func do_movement(delta):
 	var up_move: float = 2.0
 	if not moving_up:
 		up_move *= -1 
-	var move_vec = Vector3(input_vec.x, 0, input_vec.y).normalized() * speed * delta
+	var move_vec = Vector3(input_vec.x, 0, input_vec.y).normalized() * speed #* delta
+	
 	move_vec.y = up_move * delta
-	translate_object_local(move_vec)
+	#translate_object_local(move_vec)
+	velocity = move_vec
+	move_and_slide()
 
 func on_change_direction():
 	moving_up = not moving_up
 	print("change directions!")
+	
+func get_pickup(the_pickup):
+	print("you got a pickup")
+	the_pickup.queue_free()

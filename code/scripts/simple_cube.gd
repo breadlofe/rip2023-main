@@ -1,5 +1,7 @@
 extends CharacterBody3D
 
+signal change_score(new_score)
+
 @export var speed: float = 5.0
 @export var bounce_time: float = 1.0
 @export var bullet_scene: PackedScene
@@ -7,11 +9,20 @@ extends CharacterBody3D
 var moving_up: bool = false
 var time_to_move_in_dir: float = 0.5
 
+var time_survived: float = 0.0 	#Constantly add delta time to this
+								#When we pass a whole new number, notify UI to change.
+var time_score: int = 0			#The whole number that is currently displayed in the UI
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	var mh = get_node("/root/worldRoot/main_hud")
+	print(mh)
+	connect("change_score",mh.do_change_score)
+	
 	var tnode: Timer
 	tnode = $simpleCube/Node/Timer
-	#tnode.wait_time
+	tnode.wait_time = bounce_time
+	$simpleCube/Node/Timer.start()
 	#$Timer.start() # resets timer so they go at different speeds at first loop.
 	
 	#1st way -->
@@ -31,6 +42,11 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	do_movement(delta)
+	time_survived += delta
+	if(int(time_survived) > time_score):
+		time_score = int(time_survived)
+		emit_signal("change_score", time_score)
+		print(time_score)
 	if Input.is_action_just_pressed("fire"):
 		var new_bullet = bullet_scene.instantiate()
 		#puts laser where the container is.
@@ -59,6 +75,6 @@ func on_change_direction():
 	moving_up = not moving_up
 	print("change directions!")
 	
-func get_pickup(the_pickup):
+func get_pickup(_the_pickup):
 	print("you got a pickup")
-	the_pickup.queue_free()
+	#the_pickup.queue_free()

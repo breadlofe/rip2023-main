@@ -1,0 +1,33 @@
+[gd_scene load_steps=4 format=3 uid="uid://nju5aigqjyvg"]
+
+[ext_resource type="Script" path="res://scripts/main_hud.gd" id="1_58g20"]
+[ext_resource type="FontFile" uid="uid://dej6ttlrfh2ox" path="res://fonts/Kanit-Medium.ttf" id="2_2nwr0"]
+[ext_resource type="Texture2D" uid="uid://b7d2lycrow0jj" path="res://images/healthbar_inner.png" id="3_x6ow5"]
+
+[node name="main_hud" type="CanvasLayer"]
+script = ExtResource("1_58g20")
+
+[node name="main_container" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="score_label" type="Label" parent="main_container"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_fonts/font = ExtResource("2_2nwr0")
+theme_override_font_sizes/font_size = 25
+text = "Score: 0"
+
+[node name="Label" type="Label" parent="main_container"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+text = "Perhaps today."
+
+[node name="TextureRect" type="TextureRect" parent="main_container"]
+layout_mode = 2
+texture = ExtResource("3_x6ow5")

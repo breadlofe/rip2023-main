@@ -19,4 +19,4 @@ surface_material_override/0 = SubResource("ORMMaterial3D_blrix")
 [node name="collectable_collider" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_cih0l")
 
-[connection signal="body_shape_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

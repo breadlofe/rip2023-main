@@ -1,11 +1,21 @@
-[gd_scene load_steps=3 format=3 uid="uid://dgkalf61u10pa"]
+[gd_scene load_steps=4 format=3 uid="uid://dgkalf61u10pa"]
 
 [ext_resource type="PackedScene" uid="uid://gwcw14msshg8" path="res://scenes/bullet.glb" id="1_8naqu"]
 [ext_resource type="Script" path="res://scripts/bullet.gd" id="2_lsyvr"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ik441"]
 
 [node name="bullet" instance=ExtResource("1_8naqu")]
 script = ExtResource("2_lsyvr")
 
 [node name="VisibleOnScreenNotifier3D" type="VisibleOnScreenNotifier3D" parent="." index="1"]
 
+[node name="bullet" type="RigidBody3D" parent="." index="2"]
+transform = Transform3D(116.443, 0, 0, 0, 17.7086, 0, 0, 0, 20.2571, -0.0442157, 0, 0)
+
+[node name="bullet_collider" type="CollisionShape3D" parent="bullet" index="0"]
+transform = Transform3D(0.0108707, 0, 0, 0, 0.0450604, 0, 0, 0, 0.0327016, 0, 0, 0)
+shape = SubResource("BoxShape3D_ik441")
+
 [connection signal="screen_exited" from="VisibleOnScreenNotifier3D" to="." method="die"]
+[connection signal="body_entered" from="bullet" to="." method="_on_bullet_body_entered"]

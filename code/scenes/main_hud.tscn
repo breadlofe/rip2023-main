@@ -1,33 +1,55 @@
-[gd_scene load_steps=4 format=3 uid="uid://nju5aigqjyvg"]
+[gd_scene load_steps=5 format=3 uid="uid://nju5aigqjyvg"]
 
 [ext_resource type="Script" path="res://scripts/main_hud.gd" id="1_58g20"]
 [ext_resource type="FontFile" uid="uid://dej6ttlrfh2ox" path="res://fonts/Kanit-Medium.ttf" id="2_2nwr0"]
+[ext_resource type="Texture2D" uid="uid://dw0734jsfdl7d" path="res://images/healthbar_outer.png" id="3_w7oly"]
 [ext_resource type="Texture2D" uid="uid://b7d2lycrow0jj" path="res://images/healthbar_inner.png" id="3_x6ow5"]
 
 [node name="main_hud" type="CanvasLayer"]
 script = ExtResource("1_58g20")
 
-[node name="main_container" type="MarginContainer" parent="."]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="score_label" type="Label" parent="main_container"]
-layout_mode = 2
+[node name="score_label" type="Label" parent="."]
+offset_right = 1152.0
+offset_bottom = 41.0
 size_flags_vertical = 0
 theme_override_fonts/font = ExtResource("2_2nwr0")
 theme_override_font_sizes/font_size = 25
 text = "Score: 0"
 
-[node name="Label" type="Label" parent="main_container"]
+[node name="Label" type="Label" parent="."]
 visible = false
-layout_mode = 2
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -116.0
+offset_top = -26.0
+grow_horizontal = 0
+grow_vertical = 0
 size_flags_horizontal = 8
 size_flags_vertical = 8
 text = "Perhaps today."
 
-[node name="TextureRect" type="TextureRect" parent="main_container"]
-layout_mode = 2
-texture = ExtResource("3_x6ow5")
+[node name="hp_bar" type="TextureProgressBar" parent="."]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -350.0
+offset_top = 3.0
+offset_right = 444.0
+offset_bottom = 1126.0
+grow_horizontal = 0
+scale = Vector2(0.44, 0.28)
+value = 100.0
+texture_under = ExtResource("3_w7oly")
+texture_progress = ExtResource("3_x6ow5")
+
+[node name="Button" type="Button" parent="."]
+offset_left = 802.0
+offset_top = 3.0
+offset_right = 810.0
+offset_bottom = 11.0
+text = "CLICK ME"
+
+[connection signal="button_down" from="Button" to="." method="_on_button_button_down"]

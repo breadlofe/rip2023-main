@@ -13,11 +13,15 @@ var time_survived: float = 0.0 	#Constantly add delta time to this
 								#When we pass a whole new number, notify UI to change.
 var time_score: int = 0			#The whole number that is currently displayed in the UI
 
+var health_percent: float = 1.0	#1.0 is 100% health 
+
+@onready var main_hud = get_node("/root/worldRoot/main_hud")
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	var mh = get_node("/root/worldRoot/main_hud")
-	print(mh)
-	connect("change_score",mh.do_change_score)
+	#var mh = get_node("/root/worldRoot/main_hud")
+	#print(mh)
+	connect("change_score",main_hud.do_change_score)
 	
 	var tnode: Timer
 	tnode = $simpleCube/Node/Timer
@@ -42,6 +46,11 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	do_movement(delta)
+	
+	#Temporary example
+	health_percent = max(0.0, health_percent - 0.2 * delta)
+	main_hud.do_change_health(health_percent)
+	
 	time_survived += delta
 	if(int(time_survived) > time_score):
 		time_score = int(time_survived)

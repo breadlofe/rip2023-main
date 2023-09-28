@@ -52,7 +52,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.13255, 2.1481)
 transform = Transform3D(11.9617, 0, 0, 0, 1, 0, 0, 0, 8.38008, 0, -1.81881, 0)
 
 [node name="ground_mesh" type="MeshInstance3D" parent="ground"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 mesh = SubResource("BoxMesh_7bibd")
 skeleton = NodePath("../..")
 

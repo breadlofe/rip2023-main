@@ -6,12 +6,16 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_ik441"]
 
 [node name="bullet" instance=ExtResource("1_8naqu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.108857, 0)
 script = ExtResource("2_lsyvr")
+
+[node name="Cube" parent="." index="0"]
+transform = Transform3D(0.664667, 0, 0, 0, 0.664667, 0, 0, 0, 0.664667, 0.156589, -0.0165803, 0)
 
 [node name="VisibleOnScreenNotifier3D" type="VisibleOnScreenNotifier3D" parent="." index="1"]
 
 [node name="bullet" type="RigidBody3D" parent="." index="2"]
-transform = Transform3D(116.443, 0, 0, 0, 17.7086, 0, 0, 0, 20.2571, -0.0442157, 0, 0)
+transform = Transform3D(116.443, 0, 0, 0, 17.7086, 0, 0, 0, 20.2571, -0.0442157, -0.0783309, 0)
 
 [node name="bullet_collider" type="CollisionShape3D" parent="bullet" index="0"]
 transform = Transform3D(0.0108707, 0, 0, 0, 0.0450604, 0, 0, 0, 0.0327016, 0, 0, 0)

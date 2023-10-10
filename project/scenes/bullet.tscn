@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://co1qj0j31nq7j"]
+
+[ext_resource type="PackedScene" uid="uid://g478g6p5kbt6" path="res://meshes/bullet.glb" id="1_6h3oj"]
+[ext_resource type="Script" path="res://scripts/bullet.gd" id="2_2wue8"]
+
+[node name="bullet" instance=ExtResource("1_6h3oj")]
+script = ExtResource("2_2wue8")
+
+[node name="VisibleOnScreenNotifier3D" type="VisibleOnScreenNotifier3D" parent="." index="1"]
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier3D" to="." method="die"]

@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://2ra84e1mh4oo"]
+
+[ext_resource type="Script" path="res://scripts/main_hud.gd" id="1_fjtev"]
+[ext_resource type="Texture2D" uid="uid://dw0734jsfdl7d" path="res://images/healthbar_outer.png" id="1_vp72k"]
+[ext_resource type="Texture2D" uid="uid://b7d2lycrow0jj" path="res://images/healthbar_inner.png" id="2_gs1yy"]
+[ext_resource type="FontFile" uid="uid://dej6ttlrfh2ox" path="res://fonts/Kanit-Medium.ttf" id="3_7cwps"]
+
+[node name="main_hud" type="CanvasLayer"]
+script = ExtResource("1_fjtev")
+
+[node name="hp_bar" type="TextureProgressBar" parent="."]
+offset_left = 737.0
+offset_right = 1531.0
+offset_bottom = 1123.0
+scale = Vector2(0.52, 0.32)
+value = 100.0
+texture_under = ExtResource("1_vp72k")
+texture_progress = ExtResource("2_gs1yy")
+
+[node name="score_label" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+scale = Vector2(4.6, 1.68)
+theme_override_fonts/font = ExtResource("3_7cwps")
+text = "Score: 0"

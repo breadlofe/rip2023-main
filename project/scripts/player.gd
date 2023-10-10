@@ -53,7 +53,7 @@ func _process(delta):
 		#puts laser where the container is.
 		get_node("../bullet_container").add_child(new_bullet)
 		# global position makes it so that the position of the laser begins at position of container.
-		new_bullet.global_position = global_position
+		new_bullet.global_position = global_position + Vector3(4,0,-2)
 		new_bullet.global_rotation = global_rotation
 
 func _physics_process(_delta):

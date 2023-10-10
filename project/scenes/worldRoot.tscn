@@ -10,11 +10,11 @@
 bullet_scene = ExtResource("2_ywrnu")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.0362, 12.0661)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.77086, 12.0661)
 
 [node name="mainLight" type="DirectionalLight3D" parent="."]
 
 [node name="main_hud" parent="." instance=ExtResource("2_bvvj8")]
 
 [node name="bullet_container" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -2)
+transform = Transform3D(1, 0, 0, 0, -0.95924, -0.282593, 0, 0.282593, -0.95924, 4, 0, -2)

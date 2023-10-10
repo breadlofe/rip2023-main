@@ -1,4 +1,4 @@
-extends Node3D
+extends Area3D
 
 
 # Called when the node enters the scene tree for the first time.
@@ -8,7 +8,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	translate_object_local(Vector3(0,0,2*delta))
+	translate_object_local(Vector3(0,0,-5*delta))
 
 
 func die():

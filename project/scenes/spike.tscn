@@ -1,10 +1,19 @@
-[gd_scene load_steps=3 format=3 uid="uid://c24svxjrpnws5"]
+[gd_scene load_steps=6 format=3 uid="uid://c24svxjrpnws5"]
+
+[ext_resource type="Shader" path="res://scripts/spike.gdshader" id="1_g6nmv"]
+[ext_resource type="Script" path="res://scripts/spike.gd" id="1_ownuo"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3rfhs"]
+render_priority = 0
+shader = ExtResource("1_g6nmv")
 
 [sub_resource type="PrismMesh" id="PrismMesh_5uo20"]
+material = SubResource("ShaderMaterial_3rfhs")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_y0pqe"]
 
 [node name="spike" type="Area3D"]
+script = ExtResource("1_ownuo")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -3.17668, 0, 1, -1.38857e-07, 0, 0, 0)
@@ -13,3 +22,5 @@ mesh = SubResource("PrismMesh_5uo20")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -3.177, 0, 1, -1.38871e-07, 0, 0, 0)
 shape = SubResource("BoxShape3D_y0pqe")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

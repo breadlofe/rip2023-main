@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://j5b7e528w03l"]
+[gd_scene load_steps=15 format=3 uid="uid://j5b7e528w03l"]
 
 [ext_resource type="PackedScene" uid="uid://be8ubmrkjnd41" path="res://scenes/player.tscn" id="1_gswsf"]
 [ext_resource type="PackedScene" uid="uid://2ra84e1mh4oo" path="res://scenes/main_hud.tscn" id="2_bvvj8"]
@@ -10,6 +10,8 @@
 [ext_resource type="PackedScene" uid="uid://b3ynb2b0ccces" path="res://scenes/enemy.tscn" id="8_ruw65"]
 [ext_resource type="PackedScene" uid="uid://5twc0src8138" path="res://scenes/enemy_bullet.tscn" id="9_h33es"]
 [ext_resource type="PackedScene" uid="uid://pycgh5c00ykp" path="res://scenes/collectable.tscn" id="9_ycgtq"]
+[ext_resource type="PackedScene" uid="uid://c24svxjrpnws5" path="res://scenes/spike.tscn" id="10_rpquj"]
+[ext_resource type="PackedScene" uid="uid://bwlo8nbqltajc" path="res://scenes/menu.tscn" id="12_hnrw7"]
 
 [sub_resource type="ORMMaterial3D" id="ORMMaterial3D_vi1t4"]
 vertex_color_use_as_albedo = true
@@ -61,3 +63,8 @@ transform = Transform3D(1, 0, 0, 0, -0.95924, -0.282593, 0, 0.282593, -0.95924, 
 
 [node name="collectable" parent="ground" instance=ExtResource("9_ycgtq")]
 transform = Transform3D(0.292039, 0, 0, 0, 0.292039, 0, 0, 0, 0.292039, -3.0505, 3.56286, -10.5945)
+
+[node name="spike" parent="ground" instance=ExtResource("10_rpquj")]
+transform = Transform3D(2.72101, 0, 0, 0, 2.72101, 0, 0, 0, 2.72101, 3.40857, 1.8553, -12.5312)
+
+[node name="menu" parent="." instance=ExtResource("12_hnrw7")]

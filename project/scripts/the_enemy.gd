@@ -3,8 +3,8 @@ extends CharacterBody3D
 var elapsed: float = 0
 var fire_timer: float = 0
 var is_hit: bool = false
-var max_health: int = 5
-var health: int = 5
+var max_health: int = 100
+var health: int = 100
 
 @export var bullet_scene: PackedScene
 
@@ -18,10 +18,11 @@ func _process(delta):
 	elapsed = elapsed + delta
 	translate_object_local(Vector3(0.25*sin(elapsed),0,0))
 	fire_timer = fire_timer + delta
+	$enemy_health.update(health,  max_health)
 	#$enemy_health.update(health,  max_health)
 	if(is_hit):
-		health = health - 1
-		print(health)
+		health = health - 25
+		#print(health)
 		$enemy_health.update(health,  max_health)
 		if health <= 0:
 			queue_free()

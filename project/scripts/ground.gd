@@ -9,3 +9,5 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	translate_object_local(Vector3(0,0,2*delta))
+	#print(global_position.z)
+	#365 level change for z value

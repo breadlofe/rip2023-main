@@ -55,6 +55,8 @@ radius = 0.05
 height = 0.07
 
 [node name="bullet" type="Area3D"]
+collision_layer = 2
+collision_mask = 2
 script = ExtResource("2_2wue8")
 
 [node name="Cube" type="MeshInstance3D" parent="."]

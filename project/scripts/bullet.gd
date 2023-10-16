@@ -16,6 +16,6 @@ func die():
 func _on_body_entered(hit_object):
 	#print("hello")
 	if hit_object.is_in_group("enemy"):
-		print("ouchie")
+		#print("ouchie")
 		hit_object.got_hit(self)
 		self.queue_free()

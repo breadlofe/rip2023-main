@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://5twc0src8138"]
+
+[ext_resource type="Script" path="res://scenes/enemy_bullet.gd" id="1_uix6o"]
+
+[sub_resource type="ORMMaterial3D" id="ORMMaterial3D_mpoqu"]
+albedo_color = Color(0.313726, 0.619608, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_abrgc"]
+material = SubResource("ORMMaterial3D_mpoqu")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_kotam"]
+
+[node name="enemy_bullet" type="Area3D"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+script = ExtResource("1_uix6o")
+
+[node name="VisibleOnScreenNotifier3D" type="VisibleOnScreenNotifier3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.324888, 0, 0, 0, 0.301914, 0, 0, 0, 2.43886, 0, 0, 0)
+mesh = SubResource("BoxMesh_abrgc")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(2.48369, 0, 0, 0, 2.48369, 0, 0, 0, 2.48369, 0, 0, 0)
+shape = SubResource("BoxShape3D_kotam")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier3D" to="." method="die"]

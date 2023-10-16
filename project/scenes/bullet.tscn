@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://co1qj0j31nq7j"]
+[gd_scene load_steps=9 format=3 uid="uid://co1qj0j31nq7j"]
 
 [ext_resource type="Script" path="res://scripts/bullet.gd" id="2_2wue8"]
+[ext_resource type="Material" uid="uid://cc3kq787ujabg" path="res://particles/bullet.tres" id="2_35avt"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p783u"]
 resource_name = "Material"
@@ -41,17 +42,39 @@ shadow_mesh = SubResource("ArrayMesh_vgwrw")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_uynv0"]
 
+[sub_resource type="ORMMaterial3D" id="ORMMaterial3D_esvyb"]
+transparency = 1
+albedo_color = Color(1, 0.568627, 1, 0.929412)
+albedo_texture_msdf = true
+clearcoat_enabled = true
+clearcoat_roughness = 0.59
+
+[sub_resource type="SphereMesh" id="SphereMesh_aowng"]
+material = SubResource("ORMMaterial3D_esvyb")
+radius = 0.05
+height = 0.07
+
 [node name="bullet" type="Area3D"]
 script = ExtResource("2_2wue8")
 
 [node name="Cube" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.664667, 0, 0, 0, 0.664667, 0, 0, 0, 0.664667, 0.156589, 0.0896065, 0)
+transform = Transform3D(-8.74228e-08, 0, 2, 0, 2, 0, -2, 0, -8.74228e-08, 0.156589, 0.0896065, 0)
 mesh = SubResource("ArrayMesh_17sg3")
 skeleton = NodePath("")
 
 [node name="VisibleOnScreenNotifier3D" type="VisibleOnScreenNotifier3D" parent="."]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, 0, 0, 0)
 shape = SubResource("BoxShape3D_uynv0")
 
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+transform = Transform3D(0.4, 0, 0, 0, 0.25737, 0, 0, 0, 0.247917, 0, 0, 0)
+amount = 75
+visibility_aabb = AABB(-2.53693, -4, -4, 5.07387, 8, 8)
+trail_lifetime = 0.71
+process_material = ExtResource("2_35avt")
+draw_pass_1 = SubResource("SphereMesh_aowng")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier3D" to="." method="die"]

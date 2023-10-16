@@ -11,6 +11,8 @@ var time_survived: float = 0.0 	#Constantly add delta time to this
 								#When we pass a whole new number, notify UI to change.
 var time_score: int = 0			#The whole number that is currently displayed in the UI
 
+var score: int = 0
+
 var health_percent: float = 1.0	#1.0 is 100% health 
 
 var is_hit: bool = false
@@ -30,8 +32,6 @@ func _process(delta):
 	do_movement(delta)
 	
 	# HEALTH BAR LOWERS
-	if Input.is_action_just_pressed("fire"):
-		is_hit = true
 	if is_hit:
 		tick_cur += delta
 		health_percent = max(0.0, health_percent - 0.2 * delta)
@@ -44,30 +44,42 @@ func _process(delta):
 	time_survived += delta
 	if(int(time_survived) > time_score):
 		time_score = int(time_survived)
-		emit_signal("change_score", time_score)
+	#	emit_signal("change_score", time_score)
 		#print(time_score)
 		
 	# FIRE BULLETS
 	if Input.is_action_just_pressed("fire"):
 		var new_bullet = bullet_scene.instantiate()
+		var new_bullet2 = bullet_scene.instantiate()
 		#puts laser where the container is.
 		get_node("../bullet_container").add_child(new_bullet)
+		get_node("../bullet_container").add_child(new_bullet2)
 		# global position makes it so that the position of the laser begins at position of container.
 		new_bullet.global_position = global_position + Vector3(4,0,-2)
 		new_bullet.global_rotation = global_rotation
+		new_bullet2.global_position = global_position + Vector3(-4,0,-2)
+		new_bullet2.global_rotation = global_rotation
 
 func _physics_process(_delta):
 	pass
 
 func do_movement(delta):
-	var input_vec = Input.get_vector("move_left", "move_right", "move_up", "move_down")
-	var move_vec = Vector3(input_vec.x, 0, input_vec.y).normalized() * speed
-	velocity = move_vec
-	move_and_slide()
+	if global_position.x > -20 && global_position.x <= 20:
+		var input_vec = Input.get_vector("move_left", "move_right", "move_up", "move_down")
+		var move_vec = Vector3(input_vec.x, 0, input_vec.y).normalized() * speed
+		velocity = move_vec
+		move_and_slide()
+	if global_position.x <= -20:
+		global_position.x = -19.9
+	if global_position.x >= 20:
+		global_position.x = 19.9
 
 func on_change_direction():
 	print("change directions!")
 	
 func get_pickup(_the_pickup):
-	print("you got a pickup")
-	#the_pickup.queue_free()
+	score = score + 1
+	emit_signal("change_score", score)
+	
+func got_hit(_the_pickup):
+	is_hit = true

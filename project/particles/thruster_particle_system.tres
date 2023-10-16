@@ -1,0 +1,23 @@
+[gd_resource type="ParticleProcessMaterial" load_steps=5 format=3 uid="uid://criscqlwmoafs"]
+
+[sub_resource type="Gradient" id="Gradient_qk6to"]
+offsets = PackedFloat32Array(0.387097, 0.990741, 1)
+colors = PackedColorArray(1, 0, 0, 1, 0.921569, 0.831373, 0, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_xfhag"]
+gradient = SubResource("Gradient_qk6to")
+
+[sub_resource type="Curve" id="Curve_d6xks"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.934615, 0.145907), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_wmh0f"]
+curve = SubResource("Curve_d6xks")
+
+[resource]
+lifetime_randomness = 0.24
+direction = Vector3(0, 0, -1)
+spread = 45.25
+gravity = Vector3(0, -2.5, 15)
+scale_curve = SubResource("CurveTexture_wmh0f")
+color_ramp = SubResource("GradientTexture1D_xfhag")

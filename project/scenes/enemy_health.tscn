@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://c1vvnfqxyade6"]
+
+[ext_resource type="Texture2D" uid="uid://cscacrmjp5bg3" path="res://images/barHorizontal_green_mid 200.png" id="1_2b4pf"]
+[ext_resource type="Script" path="res://scripts/enemy_health.gd" id="1_7srs8"]
+[ext_resource type="Script" path="res://scripts/Healthbar2D.gd" id="3_8w5j7"]
+
+[node name="enemy_health" type="Sprite3D"]
+transform = Transform3D(1.68041, 0, 0, 0, 1.68041, 0, 0, 0, 2.62909, 0, 0, 0)
+billboard = 1
+texture = ExtResource("1_2b4pf")
+script = ExtResource("1_7srs8")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+transparent_bg = true
+size = Vector2i(20, 26)
+
+[node name="Healthbar2D" type="TextureProgressBar" parent="SubViewport"]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("3_8w5j7")

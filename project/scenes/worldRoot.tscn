@@ -1,17 +1,22 @@
-[gd_scene load_steps=15 format=3 uid="uid://j5b7e528w03l"]
+[gd_scene load_steps=20 format=3 uid="uid://j5b7e528w03l"]
 
 [ext_resource type="PackedScene" uid="uid://be8ubmrkjnd41" path="res://scenes/player.tscn" id="1_gswsf"]
+[ext_resource type="Script" path="res://scripts/game.gd" id="1_irwff"]
+[ext_resource type="Script" path="res://scripts/worldRoot.gd" id="1_tfjhs"]
 [ext_resource type="PackedScene" uid="uid://2ra84e1mh4oo" path="res://scenes/main_hud.tscn" id="2_bvvj8"]
 [ext_resource type="PackedScene" uid="uid://co1qj0j31nq7j" path="res://scenes/bullet.tscn" id="2_ywrnu"]
 [ext_resource type="Material" uid="uid://criscqlwmoafs" path="res://particles/thruster_particle_system.tres" id="3_n76hq"]
 [ext_resource type="PackedScene" uid="uid://jvinsdnit2pi" path="res://meshes/ground.glb" id="4_vxlyc"]
 [ext_resource type="Script" path="res://scripts/ground.gd" id="6_jbbme"]
+[ext_resource type="Script" path="res://scripts/water.gd" id="8_16leq"]
 [ext_resource type="PackedScene" uid="uid://c1vvnfqxyade6" path="res://scenes/enemy_health.tscn" id="8_rtmmr"]
 [ext_resource type="PackedScene" uid="uid://b3ynb2b0ccces" path="res://scenes/enemy.tscn" id="8_ruw65"]
 [ext_resource type="PackedScene" uid="uid://5twc0src8138" path="res://scenes/enemy_bullet.tscn" id="9_h33es"]
 [ext_resource type="PackedScene" uid="uid://pycgh5c00ykp" path="res://scenes/collectable.tscn" id="9_ycgtq"]
 [ext_resource type="PackedScene" uid="uid://c24svxjrpnws5" path="res://scenes/spike.tscn" id="10_rpquj"]
 [ext_resource type="PackedScene" uid="uid://bwlo8nbqltajc" path="res://scenes/menu.tscn" id="12_hnrw7"]
+[ext_resource type="PackedScene" uid="uid://beesoao3enmpa" path="res://scenes/water.tscn" id="15_4x78v"]
+[ext_resource type="PackedScene" uid="uid://cnyw8qy30uel0" path="res://scenes/pause_menu.tscn" id="15_igv4h"]
 
 [sub_resource type="ORMMaterial3D" id="ORMMaterial3D_vi1t4"]
 vertex_color_use_as_albedo = true
@@ -19,52 +24,71 @@ vertex_color_use_as_albedo = true
 [sub_resource type="BoxMesh" id="BoxMesh_xjcuv"]
 material = SubResource("ORMMaterial3D_vi1t4")
 
-[node name="worldRoot" type="Node3D"]
+[node name="Game" type="Node"]
+process_mode = 3
+script = ExtResource("1_irwff")
 
-[node name="Camera3D" type="Camera3D" parent="."]
+[node name="menu" parent="." instance=ExtResource("12_hnrw7")]
+
+[node name="worldRoot" type="Node3D" parent="."]
+process_mode = 1
+script = ExtResource("1_tfjhs")
+
+[node name="Camera3D" type="Camera3D" parent="worldRoot"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.182114, 28.6607, 19.3846)
 
-[node name="player" parent="." instance=ExtResource("1_gswsf")]
+[node name="player" parent="worldRoot" instance=ExtResource("1_gswsf")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 20.0648, 0)
 bullet_scene = ExtResource("2_ywrnu")
 
-[node name="Thruster" type="GPUParticles3D" parent="player"]
+[node name="Thruster" type="GPUParticles3D" parent="worldRoot/player"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0807664, -0.141808, 3.37998)
 process_material = ExtResource("3_n76hq")
 draw_pass_1 = SubResource("BoxMesh_xjcuv")
 
-[node name="mainLight" type="DirectionalLight3D" parent="."]
+[node name="mainLight" type="DirectionalLight3D" parent="worldRoot"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 14.882, 13.4063)
 
-[node name="main_hud" parent="." instance=ExtResource("2_bvvj8")]
+[node name="Water" parent="worldRoot" instance=ExtResource("15_4x78v")]
+transform = Transform3D(72.1417, 0, 0, 0, 0.401825, 0, 0, 0, 414.542, 0, -4.944, -1568.65)
+script = ExtResource("8_16leq")
 
-[node name="bullet_container" type="Node3D" parent="."]
+[node name="collectable2" parent="worldRoot/Water" instance=ExtResource("9_ycgtq")]
+transform = Transform3D(0.0283369, 0, 0, 0, 5.08747, 0, 0, 0, 0.0049314, 0.0693136, 62.0768, -0.0426202)
+
+[node name="main_hud" parent="worldRoot" instance=ExtResource("2_bvvj8")]
+
+[node name="bullet_container" type="Node3D" parent="worldRoot"]
 transform = Transform3D(1, 0, 0, 0, -0.95924, -0.282593, 0, 0.282593, -0.95924, 4, 0, -2)
 
-[node name="ground" parent="." instance=ExtResource("4_vxlyc")]
+[node name="ground" parent="worldRoot" instance=ExtResource("4_vxlyc")]
 transform = Transform3D(7, 0, 0, 0, 7, 0, 0, 0, 7, 0, -4.94, -61.55)
 script = ExtResource("6_jbbme")
 
-[node name="ground2" parent="ground" instance=ExtResource("4_vxlyc")]
+[node name="ground2" parent="worldRoot/ground" instance=ExtResource("4_vxlyc")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.505571, -21.6676)
 
-[node name="ground3" parent="ground" instance=ExtResource("4_vxlyc")]
+[node name="ground3" parent="worldRoot/ground" instance=ExtResource("4_vxlyc")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.07691, -43.3351)
 
-[node name="the_enemy" parent="ground" instance=ExtResource("8_ruw65")]
+[node name="the_enemy" parent="worldRoot/ground" instance=ExtResource("8_ruw65")]
 transform = Transform3D(0.142857, 0, 0, 0, 0.142857, 0, 0, 0, 0.142857, -2.37521, 3.38817, -20.483)
 bullet_scene = ExtResource("9_h33es")
 
-[node name="enemy_health" parent="ground/the_enemy" instance=ExtResource("8_rtmmr")]
+[node name="enemy_health" parent="worldRoot/ground/the_enemy" instance=ExtResource("8_rtmmr")]
 transform = Transform3D(4.10241, 0, 0, 0, 4.10241, 0, 0, 0, 4.10241, -0.01474, 4.50431, 4.30269)
 
-[node name="bullet_container" type="Node3D" parent="ground"]
+[node name="bullet_container" type="Node3D" parent="worldRoot/ground"]
 transform = Transform3D(1, 0, 0, 0, -0.95924, -0.282593, 0, 0.282593, -0.95924, 4, 0, -2)
 
-[node name="collectable" parent="ground" instance=ExtResource("9_ycgtq")]
+[node name="collectable" parent="worldRoot/ground" instance=ExtResource("9_ycgtq")]
 transform = Transform3D(0.292039, 0, 0, 0, 0.292039, 0, 0, 0, 0.292039, -3.0505, 3.56286, -10.5945)
 
-[node name="spike" parent="ground" instance=ExtResource("10_rpquj")]
+[node name="spike" parent="worldRoot/ground" instance=ExtResource("10_rpquj")]
 transform = Transform3D(2.72101, 0, 0, 0, 2.72101, 0, 0, 0, 2.72101, 3.40857, 1.8553, -12.5312)
 
-[node name="menu" parent="." instance=ExtResource("12_hnrw7")]
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="pause_menu" parent="CanvasLayer" node_paths=PackedStringArray("game_manager") instance=ExtResource("15_igv4h")]
+process_mode = 2
+game_manager = NodePath("../..")

@@ -23,4 +23,16 @@ theme_override_fonts/font = ExtResource("3_gwct4")
 text = "START"
 flat = true
 
+[node name="quit_button" type="Button" parent="."]
+offset_left = 838.0
+offset_top = 286.0
+offset_right = 885.0
+offset_bottom = 319.0
+scale = Vector2(5.15227, 2.66981)
+theme_override_colors/font_color = Color(0.529412, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_gwct4")
+text = "QUIT"
+flat = true
+
 [connection signal="button_down" from="start_button" to="." method="_on_button_button_down"]
+[connection signal="pressed" from="quit_button" to="." method="_on_quit_button_pressed"]

@@ -13,13 +13,15 @@ var time_score: int = 0			#The whole number that is currently displayed in the U
 
 var score: int = 0
 
+var sound_player := AudioStreamPlayer.new()
+
 var health_percent: float = 1.0	#1.0 is 100% health 
 
 var is_hit: bool = false
 @export var tick_max: float = 0.5
 var tick_cur: float = 0.0
 
-@onready var main_hud = get_node("/root/worldRoot/main_hud")
+@onready var main_hud = get_node("/root/Game/worldRoot/main_hud")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -27,16 +29,20 @@ func _ready():
 	#print(mh)
 	connect("change_score",main_hud.do_change_score)
 	var tnode: Timer
+	$redman.hide()
+	add_child(sound_player)
 	
 func _process(delta):
 	do_movement(delta)
 	
 	# HEALTH BAR LOWERS
 	if is_hit:
+		$redman.show()
 		tick_cur += delta
 		health_percent = max(0.0, health_percent - 0.2 * delta)
 	if tick_cur >= tick_max:
 		is_hit = false
+		$redman.hide()
 		tick_cur = 0
 	main_hud.do_change_health(health_percent)
 	
@@ -49,6 +55,9 @@ func _process(delta):
 		
 	# FIRE BULLETS
 	if Input.is_action_just_pressed("fire"):
+		var sound_effect = load("res://sfx/player_fire.ogg")
+		sound_player.stream = sound_effect
+		sound_player.play()
 		var new_bullet = bullet_scene.instantiate()
 		var new_bullet2 = bullet_scene.instantiate()
 		#puts laser where the container is.
@@ -78,6 +87,9 @@ func on_change_direction():
 	print("change directions!")
 	
 func get_pickup(_the_pickup):
+	var sound_effect = load("res://sfx/got_collectable.ogg")
+	sound_player.stream = sound_effect
+	sound_player.play()
 	score = score + 1
 	emit_signal("change_score", score)
 	

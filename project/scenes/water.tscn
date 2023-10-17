@@ -1,0 +1,29 @@
+[gd_scene load_steps=7 format=3 uid="uid://beesoao3enmpa"]
+
+[ext_resource type="Shader" path="res://scripts/water.gdshader" id="1_2asvw"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_245rt"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_sny6k"]
+noise = SubResource("FastNoiseLite_245rt")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_n5gxo"]
+render_priority = 0
+shader = ExtResource("1_2asvw")
+shader_parameter/height_scale = 0.5
+shader_parameter/noise = SubResource("NoiseTexture2D_sny6k")
+
+[sub_resource type="BoxMesh" id="BoxMesh_ch8md"]
+material = SubResource("ShaderMaterial_n5gxo")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_miyyc"]
+
+[node name="Water" type="Area3D"]
+transform = Transform3D(6.0941, 0, 0, 0, 1, 0, 0, 0, 17.4566, 0, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(2.96945, 0, 0, 0, 0.194084, 0, 0, 0, 4.6449, 0, 0, 0)
+mesh = SubResource("BoxMesh_ch8md")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_miyyc")

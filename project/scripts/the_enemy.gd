@@ -5,12 +5,13 @@ var fire_timer: float = 0
 var is_hit: bool = false
 var max_health: int = 100
 var health: int = 100
+var sound_player := AudioStreamPlayer.new()
 
 @export var bullet_scene: PackedScene
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass
+	add_child(sound_player)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -25,12 +26,18 @@ func _process(delta):
 		#print(health)
 		$enemy_health.update(health,  max_health)
 		if health <= 0:
+			var sound_effect = load("res://sfx/enemy_death.ogg")
+			sound_player.stream = sound_effect
+			sound_player.play()
 			queue_free()
 		is_hit = false
 		#self.queue_free()
 	#print(fire_timer)
 	if(fire_timer >= 2):
 		#print("FIRE")
+		var sound_effect = load("res://sfx/enemy_fire.ogg")
+		sound_player.stream = sound_effect
+		sound_player.play()
 		var new_bullet = bullet_scene.instantiate()
 		var new_bullet2 = bullet_scene.instantiate()
 		#puts laser where the container is.

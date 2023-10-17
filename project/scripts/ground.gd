@@ -11,3 +11,6 @@ func _process(delta):
 	translate_object_local(Vector3(0,0,2*delta))
 	#print(global_position.z)
 	#365 level change for z value
+	if(global_position.z >= 365):
+		$/root/Game/worldRoot/player.global_position.z = -833
+		$/root/Game/worldRoot/Camera3D.global_position.z = -833 + 19
